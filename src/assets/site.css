@@ -98,7 +98,8 @@ code { background: var(--surface-2); padding: 0.1em 0.35em; border-radius: 5px; 
 .wordmark .diet { color: var(--green); }
 
 /* ---------- breadcrumbs ---------- */
-.breadcrumbs { font-size: 0.9rem; margin: 22px 0 0; }
+/* Keep .wrap's auto side margins so the trail lines up with the page content. */
+.breadcrumbs { font-size: 0.9rem; margin-top: 22px; margin-bottom: 0; }
 .breadcrumbs ol { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; color: var(--muted); }
 .breadcrumbs li + li::before { content: "›"; margin-right: 6px; color: var(--muted); }
 .breadcrumbs a { color: var(--ink-2); }

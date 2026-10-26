@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thanks for getting TokenDiet: install guide</title>
+<meta name="description" content="How to install TokenDiet in Claude Code and other agents, check that it works, and run your first token diet.">
+<meta name="author" content="Bar Madar">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#faf9f7" media="(prefers-color-scheme: light)">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tokenmeter &amp; TokenDiet">
+<meta property="og:title" content="Thanks for getting TokenDiet: install guide">
+<meta property="og:description" content="How to install TokenDiet in Claude Code and other agents, check that it works, and run your first token diet.">
+<meta property="og:url" content="https://bar-madar.github.io/tokendiet/thanks/">
+<meta property="og:image" content="https://bar-madar.github.io/images/og-tokendiet.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Thanks for getting TokenDiet: install guide">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Thanks for getting TokenDiet: install guide">
+<meta name="twitter:description" content="How to install TokenDiet in Claude Code and other agents, check that it works, and run your first token diet.">
+<meta name="twitter:image" content="https://bar-madar.github.io/images/og-tokendiet.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/site.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://bar-madar.github.io/"},{"@type":"ListItem","position":2,"name":"TokenDiet","item":"https://bar-madar.github.io/tokendiet/"},{"@type":"ListItem","position":3,"name":"Install guide","item":"https://bar-madar.github.io/tokendiet/thanks/"}]}]}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Tokenmeter &amp; TokenDiet, home"><svg viewBox="0 0 13 12" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><path fill="#c8724f" d="M3 0h1v1H3zM8 0h1v1H8zM4 1h1v1H4zM7 1h1v1H7zM3 2h6v1H3zM2 3h8v1H2zM1 4h2v2H1zM5 4h2v2H5zM9 4h2v2H9zM0 6h12v1H0zM0 7h1v2H0zM2 7h8v2H2zM11 7h1v2h-1zM3 9h2v2H3zM7 9h2v2H7z"/><path fill="#e0916f" d="M3 2h6v1H3z"/><path fill="#1a1a1a" d="M3 4h2v2H3zM7 4h2v2H7z"/></svg><span>Bar Madar</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <ul><li><a href="/tokendiet/" aria-current="page">TokenDiet</a></li><li><a href="/tokenmeter/">Tokenmeter</a></li><li><a href="/support/">Support</a></li></ul>
+    </nav>
+  </div>
+</header>
+<nav class="breadcrumbs wrap" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/tokendiet/">TokenDiet</a></li><li><span aria-current="page">Install guide</span></li></ol></nav>
+<main id="main" tabindex="-1">
+
+<section class="hero" aria-labelledby="thanks-title"><div class="wrap">
+  <h1 id="thanks-title">Thanks for getting TokenDiet</h1>
+  <p class="lead">Here's how to install it and run your first diet. It takes about a minute.</p>
+</div></section>
+
+<section class="section" aria-labelledby="install-title"><div class="wrap">
+  <h2 id="install-title">1. Install it</h2>
+  <h3>Claude Code</h3>
+  <p>Unzip the download into your skills folder (if your download has a different file name, use that). On macOS or Linux:</p>
+  <div class="command" role="group" aria-label="macOS or Linux install command"><pre><code>mkdir -p ~/.claude/skills &amp;&amp; unzip tokendiet-1.0.0.zip -d ~/.claude/skills/tokendiet</code></pre><button class="copy" type="button" data-copy="mkdir -p ~/.claude/skills &amp;&amp; unzip tokendiet-1.0.0.zip -d ~/.claude/skills/tokendiet" aria-label="Copy: macOS or Linux install command" hidden>Copy</button></div>
+  <p>On Windows, in PowerShell:</p>
+  <div class="command" role="group" aria-label="Windows PowerShell install command"><pre><code>Expand-Archive tokendiet-1.0.0.zip -DestinationPath &quot;$HOME\.claude\skills\tokendiet&quot;</code></pre><button class="copy" type="button" data-copy="Expand-Archive tokendiet-1.0.0.zip -DestinationPath &quot;$HOME\.claude\skills\tokendiet&quot;" aria-label="Copy: Windows PowerShell install command" hidden>Copy</button></div>
+  <p>To install it for one project only, unzip into that project's <code>.claude/skills/tokendiet</code> folder instead.</p>
+  <h3>Other agents</h3>
+  <p>TokenDiet is a standard Agent Skill with <code>SKILL.md</code> at the root of the zip. Use Agensi's install instructions for your agent, or place the folder wherever your agent loads skills from.</p>
+</div></section>
+
+<section class="section" aria-labelledby="check-title"><div class="wrap">
+  <h2 id="check-title">2. Check Node.js</h2>
+  <p>TokenDiet's scripts need Node.js 18 or newer. Check with:</p>
+  <div class="command" role="group" aria-label="Check the Node.js version"><pre><code>node --version</code></pre><button class="copy" type="button" data-copy="node --version" aria-label="Copy: Check the Node.js version" hidden>Copy</button></div>
+  <p>If it's missing or older, install it from <a href="https://nodejs.org/">nodejs.org</a>.</p>
+</div></section>
+
+<section class="section" aria-labelledby="run-title"><div class="wrap">
+  <h2 id="run-title">3. Run your first diet</h2>
+  <p>Start a new session in your project and ask:</p>
+  <ul class="checklist">
+    <li>"Put this project on a token diet"</li>
+    <li>"Where are my tokens going?" (usage check, Claude Code)</li>
+  </ul>
+  <p>Want to try it on a sample first? Ask your agent to "run the TokenDiet demo". In Claude Code you can also type <code>/tokendiet</code>. Your agent shows the findings and asks before changing anything. Backups go to <code>.tokendiet/backup</code> in your project.</p>
+  <div class="notice"><p>Changes to always-loaded files apply from the next session. In Claude Code, that's after <code>/clear</code>, <code>/compact</code> or a restart.</p></div>
+</div></section>
+
+<section class="section" aria-labelledby="help-title"><div class="wrap">
+  <h2 id="help-title">Need help?</h2>
+  <p><a href="https://github.com/bar-madar/bar-madar.github.io/issues">Open a GitHub issue</a> and I'll reply within 2 business days. Want to see your usage live after every message? Install the free <a href="/tokenmeter/">Tokenmeter</a> plugin; it also shows your TokenDiet results.</p>
+</div></section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h2>Products</h2>
+        <ul>
+          <li><a href="/tokendiet/">TokenDiet</a></li>
+          <li><a href="/tokenmeter/">Tokenmeter</a></li>
+          <li><a href="/tokendiet/thanks/">TokenDiet install guide</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Help</h2>
+        <ul>
+          <li><a href="/support/">Support</a></li>
+          <li><a href="/#faq">FAQ</a></li>
+          <li><a href="https://github.com/bar-madar">GitHub</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Legal</h2>
+        <ul>
+          <li><a href="/privacy/">Privacy policy</a></li>
+          <li><a href="/terms/">Terms and refunds</a></li>
+          <li><a href="/cookies/">Cookie policy</a></li>
+          <li><a href="/accessibility/">Accessibility statement</a></li>
+        </ul>
+      </div>
+    </div>
+    <p>Questions? <a href="https://github.com/bar-madar/bar-madar.github.io/issues">Open a GitHub issue</a>. I reply within 2 business days.</p>
+    <p class="fine">© 2026 Bar Madar, independent developer. This site uses no cookies and no tracking.
+    Tokenmeter and TokenDiet are not affiliated with or endorsed by Anthropic; Claude is a trademark of Anthropic.</p>
+  </div>
+</footer>
+
+<p id="copy-status" class="visually-hidden" role="status" aria-live="polite"></p>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TokenDiet: cut the tokens your coding agent spends on every request</title>
+<meta name="description" content="An agent skill that measures what Claude Code, Cursor, Copilot and other coding agents load into every request, and trims it without losing quality.">
+<meta name="author" content="Bar Madar">
+<link rel="canonical" href="https://bar-madar.github.io/tokendiet/">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#faf9f7" media="(prefers-color-scheme: light)">
+<meta property="og:type" content="product">
+<meta property="og:site_name" content="Tokenmeter &amp; TokenDiet">
+<meta property="og:title" content="TokenDiet: fewer tokens per request, nothing lost">
+<meta property="og:description" content="An agent skill that measures what Claude Code, Cursor, Copilot and other coding agents load into every request, and trims it without losing quality.">
+<meta property="og:url" content="https://bar-madar.github.io/tokendiet/">
+<meta property="og:image" content="https://bar-madar.github.io/images/og-tokendiet.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="TokenDiet: fewer tokens per request, nothing lost">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TokenDiet: fewer tokens per request, nothing lost">
+<meta name="twitter:description" content="An agent skill that measures what Claude Code, Cursor, Copilot and other coding agents load into every request, and trims it without losing quality.">
+<meta name="twitter:image" content="https://bar-madar.github.io/images/og-tokendiet.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/site.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","@id":"https://bar-madar.github.io/tokendiet/#app","name":"TokenDiet","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Linux","description":"An agent skill that measures what coding agents load into every request and trims it without losing information.","url":"https://bar-madar.github.io/tokendiet/","image":"https://bar-madar.github.io/images/og-tokendiet.png","softwareVersion":"1.0.0","author":{"@id":"https://bar-madar.github.io/#author"},"offers":{"@type":"Offer","price":"15","priceCurrency":"USD","availability":"https://schema.org/PreOrder","url":"https://bar-madar.github.io/tokendiet/#pricing"}},{"@type":"Person","@id":"https://bar-madar.github.io/#author","name":"Bar Madar","url":"https://github.com/bar-madar"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Will it make my agent worse?","acceptedAnswer":{"@type":"Answer","text":"It is built not to. TokenDiet only removes repetition and noise, or moves instructions so they load when needed. Anything that could affect quality, such as a smaller model or lower effort, is explained and left to you."}},{"@type":"Question","name":"Can I undo changes?","acceptedAnswer":{"@type":"Answer","text":"Yes. TokenDiet backs up every file before editing it, into a .tokendiet/backup folder in your project, and one command restores them."}},{"@type":"Question","name":"Does it send my code anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. It runs on your computer with Node.js and reads only your instruction files and Claude Code's local logs."}},{"@type":"Question","name":"How accurate are the numbers?","acceptedAnswer":{"@type":"Answer","text":"Token counts are estimates within about ±20%, because exact counts depend on each model's tokenizer. They are reliable for finding what is heavy and comparing before and after."}},{"@type":"Question","name":"Does it work without Claude Code?","acceptedAnswer":{"@type":"Answer","text":"Yes. The audit covers Claude Code, Codex, Cursor, GitHub Copilot, Gemini CLI, Windsurf and Cline. The session usage check needs Claude Code, because other agents don't keep comparable local logs."}}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://bar-madar.github.io/"},{"@type":"ListItem","position":2,"name":"TokenDiet","item":"https://bar-madar.github.io/tokendiet/"}]}]}</script>
+</head>
+<body class="has-sticky">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Tokenmeter &amp; TokenDiet, home"><svg viewBox="0 0 13 12" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><path fill="#c8724f" d="M3 0h1v1H3zM8 0h1v1H8zM4 1h1v1H4zM7 1h1v1H7zM3 2h6v1H3zM2 3h8v1H2zM1 4h2v2H1zM5 4h2v2H5zM9 4h2v2H9zM0 6h12v1H0zM0 7h1v2H0zM2 7h8v2H2zM11 7h1v2h-1zM3 9h2v2H3zM7 9h2v2H7z"/><path fill="#e0916f" d="M3 2h6v1H3z"/><path fill="#1a1a1a" d="M3 4h2v2H3zM7 4h2v2H7z"/></svg><span>Bar Madar</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <ul><li><a href="/tokendiet/" aria-current="page">TokenDiet</a></li><li><a href="/tokenmeter/">Tokenmeter</a></li><li><a href="/support/">Support</a></li></ul>
+    </nav>
+  </div>
+</header>
+<nav class="breadcrumbs wrap" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><span aria-current="page">TokenDiet</span></li></ol></nav>
+<main id="main" tabindex="-1">
+
+<section class="hero" aria-labelledby="diet-title"><div class="wrap">
+  <p class="eyebrow">Agent Skill · $15 one-time</p>
+  <h1 id="diet-title"><span aria-hidden="true"><span class="wordmark">TOKEN<span class="diet">DIET</span></span></span><span class="visually-hidden">TokenDiet</span></h1>
+  <p class="lead">Cut the tokens your coding agent spends on every request, without losing quality. TokenDiet measures your instruction files, finds what can go, and trims it with your approval.</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="/tokendiet/#pricing">TokenDiet · coming soon</a>
+    <a class="btn btn-secondary" href="#findings">See what it finds</a>
+  </div>
+  <p class="cta-note">Works with Claude Code, Codex, Cursor, GitHub Copilot, Gemini CLI, Windsurf and Cline.</p>
+  <figure class="figure">
+    <img src="/images/tokendiet-audit.png" alt="TokenDiet audit report: Claude Code loads about 2,865 tokens of instructions per request in the demo project, about 409 after safe fixes, with findings listed by how much each saves" width="1200" height="760" fetchpriority="high" decoding="async">
+    <figcaption>The audit on the demo project included with TokenDiet.</figcaption>
+  </figure>
+</div></section>
+
+<section class="section" aria-labelledby="why-title"><div class="wrap">
+  <h2 id="why-title">Why your requests are heavier than they need to be</h2>
+  <p class="lead">Every request carries your CLAUDE.md, AGENTS.md, rules files and skill descriptions. Over time they fill up with repeated rules, release checklists, code samples and old history, and you pay for all of it on every turn, in tokens and in usage limits.</p>
+</div></section>
+
+<section class="section" aria-labelledby="lossless-title"><div class="wrap">
+  <h2 id="lossless-title">Lossless by design</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>What TokenDiet does</h3>
+      <ul class="checklist">
+        <li>Removes repetition and noise</li>
+        <li>Moves instructions so they load only when needed</li>
+        <li>Asks before every change</li>
+        <li>Backs up every file it edits</li>
+        <li>Measures again so you see the result</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>What it never does on its own</h3>
+      <ul class="checklist cross">
+        <li>Lower your model, effort or thinking</li>
+        <li>Make replies terser</li>
+        <li>Delete rules your agent still needs</li>
+        <li>Disable your MCP servers or tools</li>
+      </ul>
+      <p class="muted">When one of these would save tokens, TokenDiet explains the trade-off and leaves the choice to you.</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="section" id="findings" aria-labelledby="findings-title"><div class="wrap">
+  <h2 id="findings-title">What it finds</h2>
+  <div class="grid">
+    <div class="card"><h3>Repeated rules</h3><p>The same instructions in CLAUDE.md, AGENTS.md and rules files, or twice in one file.</p></div>
+    <div class="card"><h3>Workflow sections</h3><p>Release, review or migration steps that load on every request but matter only sometimes. TokenDiet moves them into on-demand skills or scoped rules.</p></div>
+    <div class="card"><h3>History</h3><p>Change logs and past decisions that rarely help with today's work.</p></div>
+    <div class="card"><h3>Code samples</h3><p>Long examples inside instruction files, replaced with a pointer to a real file.</p></div>
+    <div class="card"><h3>Long files</h3><p>Files past 200 lines, the length Anthropic recommends staying under for CLAUDE.md.</p></div>
+    <div class="card"><h3>Always-on rules</h3><p>Cursor rules set to always apply but written for specific files.</p></div>
+    <div class="card"><h3>Broken links</h3><p>Pointers to files that no longer exist, which send your agent looking for nothing.</p></div>
+    <div class="card"><h3>Unused MCP servers</h3><p>Servers Claude Code hasn't called in 30 days, so you can switch them off.</p></div>
+  </div>
+</div></section>
+
+<section class="section" aria-labelledby="agents-title"><div class="wrap">
+  <h2 id="agents-title">Every agent in one audit</h2>
+  <p class="lead">One report shows what each agent in your project loads per request, so rules shared between agents are counted once and kept in sync.</p>
+  <div class="table-wrap">
+    <table>
+      <caption>Files TokenDiet measures for each agent</caption>
+      <thead><tr><th scope="col">Agent</th><th scope="col">What it reads</th></tr></thead>
+      <tbody><tr><th scope="row">Claude Code</th><td><code>CLAUDE.md</code> (project, parent folders, user), imports, <code>.claude/rules</code>, skill descriptions, MCP servers</td></tr><tr><th scope="row">Codex</th><td><code>AGENTS.md</code>, <code>~/.codex/AGENTS.md</code></td></tr><tr><th scope="row">Cursor</th><td><code>.cursor/rules</code> (always, described and scoped rules), <code>.cursorrules</code>, <code>AGENTS.md</code>, MCP servers</td></tr><tr><th scope="row">GitHub Copilot</th><td><code>.github/copilot-instructions.md</code>, <code>.github/instructions</code>, <code>AGENTS.md</code></td></tr><tr><th scope="row">Gemini CLI</th><td><code>GEMINI.md</code> (project and user)</td></tr><tr><th scope="row">Windsurf</th><td><code>.windsurf/rules</code>, <code>.windsurfrules</code></td></tr><tr><th scope="row">Cline</th><td><code>.clinerules</code> (file or folder)</td></tr></tbody>
+    </table>
+  </div>
+</div></section>
+
+<section class="section" aria-labelledby="usage-title"><div class="wrap">
+  <h2 id="usage-title">See what each Claude Code session costs</h2>
+  <p class="lead">The usage check shows this session's tokens, how full the context is, and every time the prompt cache had to be rebuilt, with the likely cause: a model switch, a break longer than the cache lifetime, or a context change. Each rebuild re-sends your whole context at full price.</p>
+  <figure class="figure">
+    <img src="/images/tokendiet-usage.png" alt="TokenDiet usage check: a demo session of 227,515 tokens over 5 responses, 38% cache hit, and two cache rebuilds, one from a model switch and one after a 144-minute break, with tips to avoid them" width="1200" height="520" loading="lazy" decoding="async">
+    <figcaption>The usage check on a demo session.</figcaption>
+  </figure>
+</div></section>
+
+<section class="section" aria-labelledby="how-title"><div class="wrap">
+  <h2 id="how-title">How it works</h2>
+  <ol class="steps">
+    <li><h3>Ask</h3><p>"Put this project on a token diet." Your agent runs the audit and shows the top findings with what each saves.</p></li>
+    <li><h3>Approve</h3><p>Pick the fixes you want. TokenDiet backs up each file, then applies the change exactly as its playbook describes.</p></li>
+    <li><h3>Compare</h3><p>It measures again and shows before and after for each agent. If you use Tokenmeter, the result appears in its dashboard.</p></li>
+  </ol>
+</div></section>
+
+<section class="section" aria-labelledby="results-title"><div class="wrap">
+  <h2 id="results-title">On the demo project</h2>
+  <div class="stat-row">
+    <div class="stat"><span class="num">2,865 → <span class="green">409</span></span><span class="what">tokens per request, Claude Code</span></div>
+    <div class="stat"><span class="num">631 → <span class="green">233</span></span><span class="what">tokens per request, Cursor</span></div>
+    <div class="stat"><span class="num">8</span><span class="what">findings with fixes</span></div>
+  </div>
+  <p class="muted">The demo project ships with TokenDiet so you can try it safely. Your results depend on your setup; counts are estimates within about ±20%.</p>
+</div></section>
+
+<section class="section" id="pricing" aria-labelledby="pricing-title"><div class="wrap">
+  <h2 id="pricing-title">Pricing</h2>
+  <div class="grid">
+    <div class="card accent-green">
+      <p class="price mono">One-time</p>
+      <p class="stat"><span class="num">$15</span><span class="what">coming soon to Agensi</span></p>
+      <ul class="checklist">
+        <li>The skill, scripts and playbook</li>
+        <li>A demo project to try it safely first</li>
+        <li>Use for yourself, or for your whole team or company</li>
+        <li>Support through GitHub, with replies within 2 business days</li>
+      </ul>
+      <div class="cta-row"><a class="btn btn-primary" href="/tokendiet/#pricing">TokenDiet · coming soon</a></div>
+      <p class="cta-note">TokenDiet will be sold through Agensi, which handles payment and refunds. This page will link to the listing once it is live. See the <a href="/terms/">terms and refunds</a>.</p>
+    </div>
+    <div class="card">
+      <h3>Requirements</h3>
+      <ul class="checklist">
+        <li>An agent that supports Agent Skills (SKILL.md)</li>
+        <li>Node.js 18 or newer</li>
+        <li>Claude Code, for the session usage check</li>
+      </ul>
+      <h3>After you buy</h3>
+      <p>Follow the <a href="/tokendiet/thanks/">install guide</a>. It takes about a minute.</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="section faq" id="tokendiet-faq" aria-labelledby="tokendiet-faq-title"><div class="wrap">
+      <h2 id="tokendiet-faq-title">Frequently asked questions</h2>
+      <details><summary>Will it make my agent worse?</summary><div><p>It is built not to. TokenDiet only removes repetition and noise, or moves instructions so they load when needed. Anything that could affect quality, such as a smaller model or lower effort, is explained and left to you.</p></div></details>
+<details><summary>Can I undo changes?</summary><div><p>Yes. TokenDiet backs up every file before editing it, into a .tokendiet/backup folder in your project, and one command restores them.</p></div></details>
+<details><summary>Does it send my code anywhere?</summary><div><p>No. It runs on your computer with Node.js and reads only your instruction files and Claude Code's local logs.</p></div></details>
+<details><summary>How accurate are the numbers?</summary><div><p>Token counts are estimates within about ±20%, because exact counts depend on each model's tokenizer. They are reliable for finding what is heavy and comparing before and after.</p></div></details>
+<details><summary>Does it work without Claude Code?</summary><div><p>Yes. The audit covers Claude Code, Codex, Cursor, GitHub Copilot, Gemini CLI, Windsurf and Cline. The session usage check needs Claude Code, because other agents don't keep comparable local logs.</p></div></details>
+    </div></section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h2>Products</h2>
+        <ul>
+          <li><a href="/tokendiet/">TokenDiet</a></li>
+          <li><a href="/tokenmeter/">Tokenmeter</a></li>
+          <li><a href="/tokendiet/thanks/">TokenDiet install guide</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Help</h2>
+        <ul>
+          <li><a href="/support/">Support</a></li>
+          <li><a href="/#faq">FAQ</a></li>
+          <li><a href="https://github.com/bar-madar">GitHub</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Legal</h2>
+        <ul>
+          <li><a href="/privacy/">Privacy policy</a></li>
+          <li><a href="/terms/">Terms and refunds</a></li>
+          <li><a href="/cookies/">Cookie policy</a></li>
+          <li><a href="/accessibility/">Accessibility statement</a></li>
+        </ul>
+      </div>
+    </div>
+    <p>Questions? <a href="https://github.com/bar-madar/bar-madar.github.io/issues">Open a GitHub issue</a>. I reply within 2 business days.</p>
+    <p class="fine">© 2026 Bar Madar, independent developer. This site uses no cookies and no tracking.
+    Tokenmeter and TokenDiet are not affiliated with or endorsed by Anthropic; Claude is a trademark of Anthropic.</p>
+  </div>
+</footer>
+<aside class="sticky-cta" aria-label="TokenDiet · $15"><span class="label">TokenDiet · $15</span><a class="btn btn-primary" href="/tokendiet/#pricing">Details</a></aside>
+<p id="copy-status" class="visually-hidden" role="status" aria-live="polite"></p>
+</body>
+</html>

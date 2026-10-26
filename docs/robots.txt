@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bar-madar.github.io/sitemap.xml

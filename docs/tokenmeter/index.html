@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tokenmeter: free token usage pane and dashboard for Claude Code</title>
+<meta name="description" content="A free, open-source Claude Code plugin: live tokens, context fill and plan limits in every session, plus a local dashboard with 90 days of history.">
+<meta name="author" content="Bar Madar">
+<link rel="canonical" href="https://bar-madar.github.io/tokenmeter/">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#faf9f7" media="(prefers-color-scheme: light)">
+<meta property="og:type" content="product">
+<meta property="og:site_name" content="Tokenmeter &amp; TokenDiet">
+<meta property="og:title" content="Tokenmeter: see where your Claude Code tokens go">
+<meta property="og:description" content="A free, open-source Claude Code plugin: live tokens, context fill and plan limits in every session, plus a local dashboard with 90 days of history.">
+<meta property="og:url" content="https://bar-madar.github.io/tokenmeter/">
+<meta property="og:image" content="https://bar-madar.github.io/images/og-tokenmeter.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Tokenmeter: see where your Claude Code tokens go">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tokenmeter: see where your Claude Code tokens go">
+<meta name="twitter:description" content="A free, open-source Claude Code plugin: live tokens, context fill and plan limits in every session, plus a local dashboard with 90 days of history.">
+<meta name="twitter:image" content="https://bar-madar.github.io/images/og-tokenmeter.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/site.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","@id":"https://bar-madar.github.io/tokenmeter/#app","name":"Tokenmeter","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Linux","description":"A free Claude Code plugin and local dashboard that show token usage, plan limits and context fill from your own logs.","url":"https://bar-madar.github.io/tokenmeter/","image":"https://bar-madar.github.io/images/og-tokenmeter.png","softwareVersion":"0.2.0","license":"https://opensource.org/licenses/MIT","isAccessibleForFree":true,"author":{"@id":"https://bar-madar.github.io/#author"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},{"@type":"Person","@id":"https://bar-madar.github.io/#author","name":"Bar Madar","url":"https://github.com/bar-madar"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is it really free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Tokenmeter is open source under the MIT license. The code is on GitHub."}},{"@type":"Question","name":"Why do its numbers differ from other tools?","acceptedAnswer":{"@type":"Answer","text":"Claude Code writes each response to its log once per content block, and every copy repeats the same usage. Tokenmeter counts each response once. Tools that add up every line report roughly three times as many tokens."}},{"@type":"Question","name":"Does it work in the Claude desktop app?","acceptedAnswer":{"@type":"Answer","text":"Yes, in the Code tab, as well as in the terminal and VS Code. Conversations in the Chat tab aren't logged on your computer, so they aren't counted."}},{"@type":"Question","name":"Why don't I see plan-limit bars?","acceptedAnswer":{"@type":"Answer","text":"They appear when you sign in to Claude Code with a Claude subscription, after the first reply in a session. With an API key you still get every token count and the context window."}},{"@type":"Question","name":"What does it need?","acceptedAnswer":{"@type":"Answer","text":"Claude Code with plugin support, and Node.js 20 or newer for the dashboard and log reading."}}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://bar-madar.github.io/"},{"@type":"ListItem","position":2,"name":"Tokenmeter","item":"https://bar-madar.github.io/tokenmeter/"}]}]}</script>
+</head>
+<body class="has-sticky">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Tokenmeter &amp; TokenDiet, home"><svg viewBox="0 0 13 12" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><path fill="#c8724f" d="M3 0h1v1H3zM8 0h1v1H8zM4 1h1v1H4zM7 1h1v1H7zM3 2h6v1H3zM2 3h8v1H2zM1 4h2v2H1zM5 4h2v2H5zM9 4h2v2H9zM0 6h12v1H0zM0 7h1v2H0zM2 7h8v2H2zM11 7h1v2h-1zM3 9h2v2H3zM7 9h2v2H7z"/><path fill="#e0916f" d="M3 2h6v1H3z"/><path fill="#1a1a1a" d="M3 4h2v2H3zM7 4h2v2H7z"/></svg><span>Bar Madar</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <ul><li><a href="/tokendiet/">TokenDiet</a></li><li><a href="/tokenmeter/" aria-current="page">Tokenmeter</a></li><li><a href="/support/">Support</a></li></ul>
+    </nav>
+  </div>
+</header>
+<nav class="breadcrumbs wrap" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><span aria-current="page">Tokenmeter</span></li></ol></nav>
+<main id="main" tabindex="-1">
+
+<section class="hero" aria-labelledby="meter-title"><div class="wrap">
+  <p class="eyebrow">Claude Code plugin · free and open source</p>
+  <h1 id="meter-title"><span aria-hidden="true"><span class="wordmark">TOKEN<span class="meter">METER</span></span></span><span class="visually-hidden">Tokenmeter</span></h1>
+  <p class="lead">See where your Claude Code tokens go: a live pane in every session, and a local dashboard with the full history.</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="#install">Install Tokenmeter</a>
+    <a class="btn btn-secondary" href="https://github.com/bar-madar/claude-tokenmeter">View on GitHub</a>
+  </div>
+  <p class="cta-note">MIT license · no account · nothing leaves your computer</p>
+  <figure class="figure">
+    <img src="/images/tokenmeter-dashboard.png" alt="Tokenmeter dashboard with demo data: last session, 14.35 million tokens today, a 30-day projection, 95.2% cache hit rate, plan limits at 37.5% (5-hour) and 18% (weekly), and a usage summary" width="1280" height="900" fetchpriority="high" decoding="async">
+    <figcaption>The dashboard, shown with built-in demo data.</figcaption>
+  </figure>
+</div></section>
+
+<section class="section" aria-labelledby="meter-features"><div class="wrap">
+  <h2 id="meter-features">What you get</h2>
+  <div class="grid">
+    <div class="card accent-orange">
+      <h3>Tokens pane, in every session</h3>
+      <ul class="checklist">
+        <li>This session's tokens, cache use and tool calls</li>
+        <li>How full the context window is</li>
+        <li>Your 5-hour and weekly plan limits, with reset times</li>
+        <li>Today, the last 7 days and all-time totals</li>
+        <li>Your project's TokenDiet result, when you have one</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Dashboard, on your computer</h3>
+      <ul class="checklist">
+        <li>14-day chart of input, output and cache tokens</li>
+        <li>90-day heatmap and peak hours</li>
+        <li>Projects, sessions, models and tools</li>
+        <li>Instruction weight per project, from TokenDiet</li>
+        <li>An idle pixel companion</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<section class="section" id="install" aria-labelledby="install-meter"><div class="wrap">
+  <h2 id="install-meter">Install</h2>
+  <h3>The pane</h3>
+  <p>From a terminal:</p>
+  <div class="command" role="group" aria-label="Install command for a terminal"><pre><code>claude plugin install tokenmeter --marketplace bar-madar/claude-tokenmeter</code></pre><button class="copy" type="button" data-copy="claude plugin install tokenmeter --marketplace bar-madar/claude-tokenmeter" aria-label="Copy: Install command for a terminal" hidden>Copy</button></div>
+  <p>Or at the prompt of a Claude Code session:</p>
+  <div class="command" role="group" aria-label="Install command for a Claude Code session"><pre><code>/plugin install tokenmeter --marketplace bar-madar/claude-tokenmeter</code></pre><button class="copy" type="button" data-copy="/plugin install tokenmeter --marketplace bar-madar/claude-tokenmeter" aria-label="Copy: Install command for a Claude Code session" hidden>Copy</button></div>
+  <p>In the Claude desktop app: click <strong>+</strong> next to the prompt box, choose <strong>Plugins</strong>, then <strong>Add marketplace</strong> with <code>bar-madar/claude-tokenmeter</code>, and <strong>Add plugin</strong>. Start a new session and the pane opens; type <code>/tokens</code> to bring it back.</p>
+  <h3>The dashboard</h3>
+  <div class="command" role="group" aria-label="Commands to run the dashboard"><pre><code>git clone https://github.com/bar-madar/claude-tokenmeter &amp;&amp; cd claude-tokenmeter &amp;&amp; npm start</code></pre><button class="copy" type="button" data-copy="git clone https://github.com/bar-madar/claude-tokenmeter &amp;&amp; cd claude-tokenmeter &amp;&amp; npm start" aria-label="Copy: Commands to run the dashboard" hidden>Copy</button></div>
+  <p>It opens <code>http://localhost:4545</code>. There's nothing to <code>npm install</code>. Try <code>npm run demo</code> to see it with made-up data.</p>
+</div></section>
+
+<section class="section" aria-labelledby="meter-diet"><div class="wrap">
+  <h2 id="meter-diet">Works with TokenDiet</h2>
+  <p class="lead">When a session's context passes half the window, or its prompt cache keeps missing, the pane suggests a diet. After a <a href="/tokendiet/">TokenDiet</a> audit, the pane and dashboard show your project's instruction weight, before and after. Tokenmeter stays free and works fully on its own.</p>
+</div></section>
+
+<section class="section" aria-labelledby="meter-private"><div class="wrap">
+  <h2 id="meter-private">Private and accurate</h2>
+  <div class="grid">
+    <div class="card"><h3>Stays on your computer</h3><p>Reads the logs Claude Code already keeps locally, listens on 127.0.0.1 only, and sends nothing anywhere. No analytics, no telemetry, no update checks.</p></div>
+    <div class="card"><h3>Counts each response once</h3><p>Claude Code logs a response once per content block. Tokenmeter counts it once, so its totals match what was actually used.</p></div>
+    <div class="card"><h3>Open source</h3><p>MIT license, no dependencies, tests on Windows, macOS and Linux. <a href="https://github.com/bar-madar/claude-tokenmeter">Read the code</a>.</p></div>
+  </div>
+</div></section>
+
+<section class="section faq" id="tokenmeter-faq" aria-labelledby="tokenmeter-faq-title"><div class="wrap">
+      <h2 id="tokenmeter-faq-title">Frequently asked questions</h2>
+      <details><summary>Is it really free?</summary><div><p>Yes. Tokenmeter is open source under the MIT license. The code is on <a href="https://github.com/bar-madar/claude-tokenmeter">GitHub</a>.</p></div></details>
+<details><summary>Why do its numbers differ from other tools?</summary><div><p>Claude Code writes each response to its log once per content block, and every copy repeats the same usage. Tokenmeter counts each response once. Tools that add up every line report roughly three times as many tokens.</p></div></details>
+<details><summary>Does it work in the Claude desktop app?</summary><div><p>Yes, in the Code tab, as well as in the terminal and VS Code. Conversations in the Chat tab aren't logged on your computer, so they aren't counted.</p></div></details>
+<details><summary>Why don&#39;t I see plan-limit bars?</summary><div><p>They appear when you sign in to Claude Code with a Claude subscription, after the first reply in a session. With an API key you still get every token count and the context window.</p></div></details>
+<details><summary>What does it need?</summary><div><p>Claude Code with plugin support, and Node.js 20 or newer for the dashboard and log reading.</p></div></details>
+    </div></section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h2>Products</h2>
+        <ul>
+          <li><a href="/tokendiet/">TokenDiet</a></li>
+          <li><a href="/tokenmeter/">Tokenmeter</a></li>
+          <li><a href="/tokendiet/thanks/">TokenDiet install guide</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Help</h2>
+        <ul>
+          <li><a href="/support/">Support</a></li>
+          <li><a href="/#faq">FAQ</a></li>
+          <li><a href="https://github.com/bar-madar">GitHub</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Legal</h2>
+        <ul>
+          <li><a href="/privacy/">Privacy policy</a></li>
+          <li><a href="/terms/">Terms and refunds</a></li>
+          <li><a href="/cookies/">Cookie policy</a></li>
+          <li><a href="/accessibility/">Accessibility statement</a></li>
+        </ul>
+      </div>
+    </div>
+    <p>Questions? <a href="https://github.com/bar-madar/bar-madar.github.io/issues">Open a GitHub issue</a>. I reply within 2 business days.</p>
+    <p class="fine">© 2026 Bar Madar, independent developer. This site uses no cookies and no tracking.
+    Tokenmeter and TokenDiet are not affiliated with or endorsed by Anthropic; Claude is a trademark of Anthropic.</p>
+  </div>
+</footer>
+<aside class="sticky-cta" aria-label="Tokenmeter · free"><span class="label">Tokenmeter · free</span><a class="btn btn-primary" href="/tokenmeter/#install">Install</a></aside>
+<p id="copy-status" class="visually-hidden" role="status" aria-live="polite"></p>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tokenmeter &amp; TokenDiet: spend fewer tokens, lose nothing</title>
+<meta name="description" content="Tokenmeter shows where your Claude Code tokens go. TokenDiet cuts what your instructions add to every request, for every coding agent, without losing quality.">
+<meta name="author" content="Bar Madar">
+<link rel="canonical" href="https://bar-madar.github.io/">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#faf9f7" media="(prefers-color-scheme: light)">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tokenmeter &amp; TokenDiet">
+<meta property="og:title" content="Spend fewer tokens. Lose nothing.">
+<meta property="og:description" content="Tokenmeter shows where your Claude Code tokens go. TokenDiet cuts what your instructions add to every request, for every coding agent, without losing quality.">
+<meta property="og:url" content="https://bar-madar.github.io/">
+<meta property="og:image" content="https://bar-madar.github.io/images/og-home.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Tokenmeter and TokenDiet: spend fewer tokens, lose nothing">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Spend fewer tokens. Lose nothing.">
+<meta name="twitter:description" content="Tokenmeter shows where your Claude Code tokens go. TokenDiet cuts what your instructions add to every request, for every coding agent, without losing quality.">
+<meta name="twitter:image" content="https://bar-madar.github.io/images/og-home.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/site.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://bar-madar.github.io/#website","url":"https://bar-madar.github.io/","name":"Tokenmeter & TokenDiet","inLanguage":"en","publisher":{"@id":"https://bar-madar.github.io/#author"}},{"@type":"Person","@id":"https://bar-madar.github.io/#author","name":"Bar Madar","url":"https://github.com/bar-madar"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do I need both tools?","acceptedAnswer":{"@type":"Answer","text":"No. Each works on its own. Tokenmeter shows where your tokens go; TokenDiet reduces what your instructions add to every request. Used together, Tokenmeter also shows each TokenDiet audit and suggests one when a session gets heavy."}},{"@type":"Question","name":"Is Tokenmeter really free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Tokenmeter is open source under the MIT license, with the code on GitHub. TokenDiet is a separate, paid skill."}},{"@type":"Question","name":"Which agents do they support?","acceptedAnswer":{"@type":"Answer","text":"Tokenmeter works with Claude Code. TokenDiet's audit covers Claude Code, Codex, Cursor, GitHub Copilot, Gemini CLI, Windsurf and Cline, and runs in any agent that supports Agent Skills (SKILL.md). Its session usage check needs Claude Code."}},{"@type":"Question","name":"Does anything leave my computer?","acceptedAnswer":{"@type":"Answer","text":"No. Both tools run locally, read files on your machine, and send nothing anywhere. This website doesn't use cookies or tracking either."}},{"@type":"Question","name":"What does \"lossless\" mean here?","acceptedAnswer":{"@type":"Answer","text":"TokenDiet only removes repetition and noise, or moves instructions so they load when they are needed instead of on every request. It never lowers your model, effort or thinking, and asks before every change."}}]}]}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Tokenmeter &amp; TokenDiet, home"><svg viewBox="0 0 13 12" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><path fill="#c8724f" d="M3 0h1v1H3zM8 0h1v1H8zM4 1h1v1H4zM7 1h1v1H7zM3 2h6v1H3zM2 3h8v1H2zM1 4h2v2H1zM5 4h2v2H5zM9 4h2v2H9zM0 6h12v1H0zM0 7h1v2H0zM2 7h8v2H2zM11 7h1v2h-1zM3 9h2v2H3zM7 9h2v2H7z"/><path fill="#e0916f" d="M3 2h6v1H3z"/><path fill="#1a1a1a" d="M3 4h2v2H3zM7 4h2v2H7z"/></svg><span>Bar Madar</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <ul><li><a href="/tokendiet/">TokenDiet</a></li><li><a href="/tokenmeter/">Tokenmeter</a></li><li><a href="/support/">Support</a></li></ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<section class="hero" aria-labelledby="home-title"><div class="wrap">
+  <p class="eyebrow">For Claude Code and other coding agents</p>
+  <h1 id="home-title">Spend fewer tokens.<br>Lose nothing.</h1>
+  <p class="lead">Two tools that work together. <strong>Tokenmeter</strong> shows where your Claude Code tokens go, live. <strong>TokenDiet</strong> cuts what your instructions add to every request, without making your agent any less capable.</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="/tokendiet/#pricing">TokenDiet · coming soon</a>
+    <a class="btn btn-secondary" href="/tokenmeter/#install">Install Tokenmeter, free</a>
+  </div>
+  <p class="cta-note">Both run on your computer. Nothing is sent anywhere.</p>
+</div></section>
+
+<section class="section" aria-labelledby="products-title"><div class="wrap">
+  <h2 id="products-title">Two tools, one goal</h2>
+  <div class="grid">
+    <article class="card product-card accent-orange">
+      <span class="wordmark">TOKEN<span class="meter">METER</span></span>
+      <p class="price">Free · open source (MIT) · Claude Code plugin</p>
+      <ul class="checklist">
+        <li>Live pane in every session: tokens, context fill, plan limits</li>
+        <li>Local dashboard with 90 days of history</li>
+        <li>Counts each response once, unlike tools that sum every log line</li>
+      </ul>
+      <a href="/tokenmeter/">Explore Tokenmeter</a>
+    </article>
+    <article class="card product-card accent-green">
+      <span class="wordmark">TOKEN<span class="diet">DIET</span></span>
+      <p class="price">$15 one-time · Agent Skill</p>
+      <ul class="checklist">
+        <li>Measures what 7 coding agents load into every request</li>
+        <li>Finds repeated, stale and misplaced instructions</li>
+        <li>Applies lossless fixes, with your approval and a backup</li>
+      </ul>
+      <a href="/tokendiet/">Explore TokenDiet</a>
+    </article>
+  </div>
+</div></section>
+
+<section class="section" aria-labelledby="together-title"><div class="wrap">
+  <h2 id="together-title">How they work together</h2>
+  <p class="lead">Every request your agent sends carries the whole conversation and your instruction files. Tokenmeter makes that visible; TokenDiet makes it lighter.</p>
+  <ol class="steps">
+    <li><h3>See it</h3><p>Tokenmeter shows each session's tokens and context fill, and suggests a diet when the context passes half the window or the prompt cache keeps missing.</p></li>
+    <li><h3>Trim it</h3><p>TokenDiet measures your CLAUDE.md, AGENTS.md and rules files, proposes lossless fixes, and applies the ones you approve.</p></li>
+    <li><h3>Track it</h3><p>Each audit shows up in Tokenmeter's dashboard as that project's instruction weight, before and after.</p></li>
+  </ol>
+  <figure class="figure">
+    <img src="/images/tokendiet-audit.png" alt="TokenDiet audit report in a terminal: Claude Code loads about 2,865 tokens of instructions per request in the demo project, about 409 after safe fixes, followed by findings such as a release process section and a 32-line code sample in CLAUDE.md" width="1200" height="760" loading="lazy" decoding="async">
+    <figcaption>A TokenDiet audit of the demo project included with the skill.</figcaption>
+  </figure>
+</div></section>
+
+<section class="section" aria-labelledby="demo-title"><div class="wrap">
+  <h2 id="demo-title">On the demo project</h2>
+  <div class="stat-row">
+    <div class="stat"><span class="num">2,865 → <span class="green">409</span></span><span class="what">tokens of instructions Claude Code loads per request</span></div>
+    <div class="stat"><span class="num">631 → <span class="green">233</span></span><span class="what">tokens of rules Cursor loads per request</span></div>
+    <div class="stat"><span class="num">8</span><span class="what">findings, each explained with its fix</span></div>
+  </div>
+  <p class="muted">Measured on the demo project that ships with TokenDiet. Your results depend on your setup. Counts are estimates within about ±20%.</p>
+</div></section>
+
+<section class="section" aria-labelledby="private-title"><div class="wrap">
+  <h2 id="private-title">Private by design</h2>
+  <div class="grid">
+    <div class="card"><h3>Runs locally</h3><p>Both tools read files on your computer and send nothing anywhere. No account, no API key.</p></div>
+    <div class="card"><h3>You stay in control</h3><p>TokenDiet asks before every change and backs up every file it edits. One command undoes it.</p></div>
+    <div class="card"><h3>No tracking here either</h3><p>This website sets no cookies and loads nothing from other sites. See the <a href="/privacy/">privacy policy</a>.</p></div>
+  </div>
+</div></section>
+
+<section class="section faq" id="faq" aria-labelledby="faq-title"><div class="wrap">
+      <h2 id="faq-title">Frequently asked questions</h2>
+      <details><summary>Do I need both tools?</summary><div><p>No. Each works on its own. Tokenmeter shows where your tokens go; TokenDiet reduces what your instructions add to every request. Used together, Tokenmeter also shows each TokenDiet audit and suggests one when a session gets heavy.</p></div></details>
+<details><summary>Is Tokenmeter really free?</summary><div><p>Yes. Tokenmeter is open source under the MIT license, with the code on <a href="https://github.com/bar-madar/claude-tokenmeter">GitHub</a>. TokenDiet is a separate, paid skill.</p></div></details>
+<details><summary>Which agents do they support?</summary><div><p>Tokenmeter works with Claude Code. TokenDiet's audit covers Claude Code, Codex, Cursor, GitHub Copilot, Gemini CLI, Windsurf and Cline, and runs in any agent that supports Agent Skills (SKILL.md). Its session usage check needs Claude Code.</p></div></details>
+<details><summary>Does anything leave my computer?</summary><div><p>No. Both tools run locally, read files on your machine, and send nothing anywhere. This website doesn't use cookies or tracking either.</p></div></details>
+<details><summary>What does &quot;lossless&quot; mean here?</summary><div><p>TokenDiet only removes repetition and noise, or moves instructions so they load when they are needed instead of on every request. It never lowers your model, effort or thinking, and asks before every change.</p></div></details>
+    </div></section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h2>Products</h2>
+        <ul>
+          <li><a href="/tokendiet/">TokenDiet</a></li>
+          <li><a href="/tokenmeter/">Tokenmeter</a></li>
+          <li><a href="/tokendiet/thanks/">TokenDiet install guide</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Help</h2>
+        <ul>
+          <li><a href="/support/">Support</a></li>
+          <li><a href="/#faq">FAQ</a></li>
+          <li><a href="https://github.com/bar-madar">GitHub</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Legal</h2>
+        <ul>
+          <li><a href="/privacy/">Privacy policy</a></li>
+          <li><a href="/terms/">Terms and refunds</a></li>
+          <li><a href="/cookies/">Cookie policy</a></li>
+          <li><a href="/accessibility/">Accessibility statement</a></li>
+        </ul>
+      </div>
+    </div>
+    <p>Questions? <a href="https://github.com/bar-madar/bar-madar.github.io/issues">Open a GitHub issue</a>. I reply within 2 business days.</p>
+    <p class="fine">© 2026 Bar Madar, independent developer. This site uses no cookies and no tracking.
+    Tokenmeter and TokenDiet are not affiliated with or endorsed by Anthropic; Claude is a trademark of Anthropic.</p>
+  </div>
+</footer>
+
+<p id="copy-status" class="visually-hidden" role="status" aria-live="polite"></p>
+</body>
+</html>

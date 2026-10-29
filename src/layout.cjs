@@ -13,7 +13,7 @@ const SITE = {
   // Set once the Agensi listing is live; until then TokenDiet shows "coming soon".
   agensiUrl: '',
   price: 15,
-  updated: '2026-10-26',
+  updated: '2026-10-29',
   responseTime: '2 business days',
 };
 
@@ -135,12 +135,14 @@ ${page.sticky ? `<aside class="sticky-cta" aria-label="${esc(page.sticky.label)}
 `;
 }
 
-// The call to action for buying TokenDiet, which depends on whether the
-// Agensi listing is live yet.
-function buyTokenDiet(extraClass = 'btn-primary') {
-  return SITE.agensiUrl
-    ? `<a class="btn ${extraClass}" href="${esc(SITE.agensiUrl)}">Get TokenDiet · $${SITE.price}</a>`
-    : `<a class="btn ${extraClass}" href="/tokendiet/#pricing">TokenDiet · coming soon</a>`;
+// The call to action for TokenDiet. Once the Agensi listing is live it buys;
+// until then it names the next useful step, never just a status.
+//   where: 'home' (hero), 'product' (TokenDiet hero) or 'pricing' (pricing card)
+function buyTokenDiet(where = 'home') {
+  if (SITE.agensiUrl) return `<a class="btn btn-primary" href="${esc(SITE.agensiUrl)}">Get TokenDiet · $${SITE.price}</a>`;
+  if (where === 'home') return '<a class="btn btn-primary" href="/tokendiet/">Explore TokenDiet</a>';
+  if (where === 'product') return '<a class="btn btn-primary" href="#pricing">See pricing</a>';
+  return '';
 }
 
 function command(text, label) {

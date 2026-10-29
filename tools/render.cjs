@@ -73,8 +73,8 @@ const cards = {
 // ---------- terminal screenshots ----------
 
 const TERM_CSS = `
-body{padding:36px;background:#0e0e0e}
-.win{height:100%;border:1px solid #333;border-radius:14px;overflow:hidden;background:#161616;display:flex;flex-direction:column}
+body{padding:0;background:#161616}
+.win{height:100%;overflow:hidden;background:#161616;display:flex;flex-direction:column}
 .bar{display:flex;gap:8px;align-items:center;padding:12px 16px;background:#1f1f1f;border-bottom:1px solid #2c2c2c}
 .bar i{width:12px;height:12px;border-radius:50%;background:#3a3a3a;display:inline-block}
 .bar i:nth-child(1){background:#ff5f57}.bar i:nth-child(2){background:#febc2e}.bar i:nth-child(3){background:#28c840}
@@ -90,8 +90,8 @@ function colorize(text) {
     return line
       .replace(/(-&gt; ~[\d,]+ after safe fixes \(-\d+%\))/g, '<span class="g">$1</span>')
       .replace(/(saves ~[\d,]+\/request)/g, '<span class="g">$1</span>')
-      .replace(/^(\s+\d+\. )(\[[a-z-]+\])/, '$1<span class="o">$2</span>')
-      .replace(/^(\s+Fix: .*)$/, '<span class="m">$1</span>')
+      .replace(/( · [a-z-]+)$/, '<span class="m">$1</span>')
+      .replace(/^(\s+Fix: .*|\s{10}\S.*)$/, '<span class="m">$1</span>')
       .replace(/^(\s{4}\S.*?\s)(model switch .*|idle \d+ min.*)$/, '$1<span class="o">$2</span>');
   }).join('\n');
 }
@@ -121,7 +121,9 @@ function shoot(html, file, width, height) {
   const src = path.join(WORK, `${path.basename(file, '.png')}.html`);
   fs.writeFileSync(src, html);
   if (fs.existsSync(file)) fs.rmSync(file);
+  // A profile of its own, so a browser you already have open can't swallow the job.
   const args = ['--headless=new', '--disable-gpu', '--hide-scrollbars', '--force-device-scale-factor=1',
+    '--no-first-run', '--no-default-browser-check', '--disable-extensions', `--user-data-dir=${path.join(WORK, 'profile')}`,
     `--window-size=${width},${height}`, '--virtual-time-budget=2000', `--screenshot=${file}`, `file:///${src.split(path.sep).join('/')}`];
   return new Promise((resolve, reject) => {
     spawn(BROWSER, args, { stdio: 'ignore' }).on('error', reject);

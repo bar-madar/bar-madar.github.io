@@ -42,15 +42,30 @@
 
 <main id="main" tabindex="-1">
 
-<section class="hero" aria-labelledby="home-title"><div class="wrap">
-  <p class="eyebrow">For Claude Code and other coding agents</p>
-  <h1 id="home-title">Spend fewer tokens.<br>Lose nothing.</h1>
-  <p class="lead">Two tools that work together. <strong>Tokenmeter</strong> shows where your Claude Code tokens go, live. <strong>TokenDiet</strong> cuts what your instructions add to every request, without making your agent any less capable.</p>
-  <div class="cta-row">
-    <a class="btn btn-primary" href="/tokendiet/#pricing">TokenDiet · coming soon</a>
-    <a class="btn btn-secondary" href="/tokenmeter/#install">Install Tokenmeter, free</a>
+<section class="hero" aria-labelledby="home-title"><div class="wrap hero-grid">
+  <div>
+    <p class="eyebrow">For Claude Code and other coding agents</p>
+    <h1 id="home-title">Spend fewer tokens.<br>Lose nothing.</h1>
+    <p class="lead">Two tools that work together. <strong>Tokenmeter</strong> shows where your Claude Code tokens go, live. <strong>TokenDiet</strong> cuts what your instructions add to every request, without making your agent any less capable.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/tokendiet/">Explore TokenDiet</a>
+      <a class="btn btn-secondary" href="/tokenmeter/#install">Install Tokenmeter, free</a>
+    </div>
+    <p class="cta-note">Both run on your computer. Nothing is sent anywhere.</p>
   </div>
-  <p class="cta-note">Both run on your computer. Nothing is sent anywhere.</p>
+  
+  <figure class="meter-card" aria-labelledby="meter-title">
+    <p class="meter-title" id="meter-title">Instructions per request</p>
+    <div class="meter-row">
+      <p class="meter-label"><span>Before TokenDiet</span><strong>2,865 tokens</strong></p>
+      <div class="meter-track" aria-hidden="true"><div class="meter-fill" style="width:100%"></div></div>
+    </div>
+    <div class="meter-row">
+      <p class="meter-label"><span>After TokenDiet</span><strong class="green">409 tokens</strong></p>
+      <div class="meter-track" aria-hidden="true"><div class="meter-fill after" style="width:14%"></div></div>
+    </div>
+    <figcaption class="meter-note">Claude Code on the demo project that ships with TokenDiet. Nothing the agent needs was removed.</figcaption>
+  </figure>
 </div></section>
 
 <section class="section" aria-labelledby="products-title"><div class="wrap">
@@ -64,7 +79,7 @@
         <li>Local dashboard with 90 days of history</li>
         <li>Counts each response once, unlike tools that sum every log line</li>
       </ul>
-      <a href="/tokenmeter/">Explore Tokenmeter</a>
+      <a class="more arrow-link" href="/tokenmeter/">Explore Tokenmeter</a>
     </article>
     <article class="card product-card accent-green">
       <span class="wordmark">TOKEN<span class="diet">DIET</span></span>
@@ -74,7 +89,7 @@
         <li>Finds repeated, stale and misplaced instructions</li>
         <li>Applies lossless fixes, with your approval and a backup</li>
       </ul>
-      <a href="/tokendiet/">Explore TokenDiet</a>
+      <a class="more arrow-link" href="/tokendiet/">Explore TokenDiet</a>
     </article>
   </div>
 </div></section>

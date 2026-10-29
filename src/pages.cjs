@@ -12,6 +12,22 @@ const AGENTS_LIST = 'Claude Code, Codex, Cursor, GitHub Copilot, Gemini CLI, Win
 const img = (src, alt, w, h, eager = false) =>
   `<img src="${src}" alt="${esc(alt)}" width="${w}" height="${h}"${eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async">`;
 
+// The home page's signature: a token meter before and after a diet, with the
+// demo project's numbers. The bars are decoration; the text carries the data.
+const meterCard = () => `
+  <figure class="meter-card" aria-labelledby="meter-title">
+    <p class="meter-title" id="meter-title">Instructions per request</p>
+    <div class="meter-row">
+      <p class="meter-label"><span>Before TokenDiet</span><strong>${n(DEMO.claudeBefore)} tokens</strong></p>
+      <div class="meter-track" aria-hidden="true"><div class="meter-fill" style="width:100%"></div></div>
+    </div>
+    <div class="meter-row">
+      <p class="meter-label"><span>After TokenDiet</span><strong class="green">${n(DEMO.claudeAfter)} tokens</strong></p>
+      <div class="meter-track" aria-hidden="true"><div class="meter-fill after" style="width:${Math.round((DEMO.claudeAfter / DEMO.claudeBefore) * 100)}%"></div></div>
+    </div>
+    <figcaption class="meter-note">Claude Code on the demo project that ships with TokenDiet. Nothing the agent needs was removed.</figcaption>
+  </figure>`;
+
 const tokendietApp = {
   '@type': 'SoftwareApplication',
   '@id': `${SITE.url}/tokendiet/#app`,
@@ -71,15 +87,18 @@ const home = {
     homeFaq.schema,
   ],
   body: `
-<section class="hero" aria-labelledby="home-title"><div class="wrap">
-  <p class="eyebrow">For Claude Code and other coding agents</p>
-  <h1 id="home-title">Spend fewer tokens.<br>Lose nothing.</h1>
-  <p class="lead">Two tools that work together. <strong>Tokenmeter</strong> shows where your Claude Code tokens go, live. <strong>TokenDiet</strong> cuts what your instructions add to every request, without making your agent any less capable.</p>
-  <div class="cta-row">
-    ${buyTokenDiet()}
-    <a class="btn btn-secondary" href="/tokenmeter/#install">Install Tokenmeter, free</a>
+<section class="hero" aria-labelledby="home-title"><div class="wrap hero-grid">
+  <div>
+    <p class="eyebrow">For Claude Code and other coding agents</p>
+    <h1 id="home-title">Spend fewer tokens.<br>Lose nothing.</h1>
+    <p class="lead">Two tools that work together. <strong>Tokenmeter</strong> shows where your Claude Code tokens go, live. <strong>TokenDiet</strong> cuts what your instructions add to every request, without making your agent any less capable.</p>
+    <div class="cta-row">
+      ${buyTokenDiet('home')}
+      <a class="btn btn-secondary" href="/tokenmeter/#install">Install Tokenmeter, free</a>
+    </div>
+    <p class="cta-note">Both run on your computer. Nothing is sent anywhere.</p>
   </div>
-  <p class="cta-note">Both run on your computer. Nothing is sent anywhere.</p>
+  ${meterCard()}
 </div></section>
 
 <section class="section" aria-labelledby="products-title"><div class="wrap">
@@ -93,7 +112,7 @@ const home = {
         <li>Local dashboard with 90 days of history</li>
         <li>Counts each response once, unlike tools that sum every log line</li>
       </ul>
-      <a href="/tokenmeter/">Explore Tokenmeter</a>
+      <a class="more arrow-link" href="/tokenmeter/">Explore Tokenmeter</a>
     </article>
     <article class="card product-card accent-green">
       ${wordmark('TokenDiet')}
@@ -103,7 +122,7 @@ const home = {
         <li>Finds repeated, stale and misplaced instructions</li>
         <li>Applies lossless fixes, with your approval and a backup</li>
       </ul>
-      <a href="/tokendiet/">Explore TokenDiet</a>
+      <a class="more arrow-link" href="/tokendiet/">Explore TokenDiet</a>
     </article>
   </div>
 </div></section>
@@ -185,14 +204,14 @@ const tokendiet = {
   ogType: 'product',
   breadcrumbs: [{ name: 'TokenDiet', path: '/tokendiet/' }],
   schema: [tokendietApp, person, dietFaq.schema],
-  sticky: { label: `TokenDiet · $${SITE.price}`, cta: SITE.agensiUrl ? 'Get it' : 'Details', href: SITE.agensiUrl || '/tokendiet/#pricing' },
+  sticky: { label: `TokenDiet · $${SITE.price}`, cta: SITE.agensiUrl ? 'Get TokenDiet' : 'See pricing', href: SITE.agensiUrl || '/tokendiet/#pricing' },
   body: `
 <section class="hero" aria-labelledby="diet-title"><div class="wrap">
   <p class="eyebrow">Agent Skill · $${SITE.price} one-time</p>
   <h1 id="diet-title"><span aria-hidden="true">${wordmark('TokenDiet')}</span><span class="visually-hidden">TokenDiet</span></h1>
   <p class="lead">Cut the tokens your coding agent spends on every request, without losing quality. TokenDiet measures your instruction files, finds what can go, and trims it with your approval.</p>
   <div class="cta-row">
-    ${buyTokenDiet()}
+    ${buyTokenDiet('product')}
     <a class="btn btn-secondary" href="#findings">See what it finds</a>
   </div>
   <p class="cta-note">Works with ${AGENTS_LIST}.</p>
@@ -235,7 +254,7 @@ const tokendiet = {
 
 <section class="section" id="findings" aria-labelledby="findings-title"><div class="wrap">
   <h2 id="findings-title">What it finds</h2>
-  <div class="grid">
+  <div class="grid grid-4">
     ${FINDINGS.map(([t, d]) => `<div class="card"><h3>${t}</h3><p>${d}</p></div>`).join('\n    ')}
   </div>
 </div></section>
@@ -282,18 +301,21 @@ const tokendiet = {
 
 <section class="section" id="pricing" aria-labelledby="pricing-title"><div class="wrap">
   <h2 id="pricing-title">Pricing</h2>
-  <div class="grid">
+  <div class="grid top">
     <div class="card accent-green">
-      <p class="price mono">One-time</p>
-      <p class="stat"><span class="num">$${SITE.price}</span><span class="what">${SITE.agensiUrl ? 'on Agensi' : 'coming soon to Agensi'}</span></p>
+      <h3>TokenDiet</h3>
+      <p class="price-block"><span class="amount">$${SITE.price}</span><span class="terms">one-time payment, no subscription</span></p>
+      ${SITE.agensiUrl ? '' : '<p class="availability">Launching soon on Agensi</p>'}
       <ul class="checklist">
         <li>The skill, scripts and playbook</li>
         <li>A demo project to try it safely first</li>
+        <li>Updates included: new versions reach you through Agensi</li>
         <li>Use for yourself, or for your whole team or company</li>
+        <li>30-day money-back guarantee</li>
         <li>Support through GitHub, with replies within ${SITE.responseTime}</li>
       </ul>
-      <div class="cta-row">${buyTokenDiet()}</div>
-      <p class="cta-note">${SITE.agensiUrl ? 'Sold by Agensi, which handles payment and refunds.' : 'TokenDiet will be sold through Agensi, which handles payment and refunds. This page will link to the listing once it is live.'} See the <a href="/terms/">terms and refunds</a>.</p>
+      ${SITE.agensiUrl ? `<div class="cta-row">${buyTokenDiet('pricing')}</div>` : ''}
+      <p class="cta-note">${SITE.agensiUrl ? 'Sold by Agensi, which handles payment and refunds.' : 'Sold through Agensi, which handles payment and refunds. A buy button appears here when the listing is live.'} See the <a href="/terms/">terms and refunds</a>.</p>
     </div>
     <div class="card">
       <h3>Requirements</h3>
@@ -467,8 +489,8 @@ const support = {
   <h1 id="support-title">Support</h1>
   <p class="lead">Questions, bugs and ideas go through GitHub issues. I reply within ${SITE.responseTime}.</p>
   <div class="cta-row">
-    <a class="btn btn-primary" href="${SITE.tokenmeterRepo}/issues">Tokenmeter issue</a>
-    <a class="btn btn-secondary" href="${SITE.issues}">TokenDiet or website issue</a>
+    <a class="btn btn-primary" href="${SITE.tokenmeterRepo}/issues/new">Report a Tokenmeter issue</a>
+    <a class="btn btn-secondary" href="${SITE.issues}/new">Report a TokenDiet or website issue</a>
   </div>
   <p class="cta-note">GitHub issues are public. Don't include private code, keys or personal details.</p>
 </div></section>
@@ -495,7 +517,7 @@ const support = {
 
 const legal = (path, title, description, heading, body) => ({
   path, title, description, breadcrumbs: [{ name: heading, path }],
-  body: `<div class="wrap"><article class="prose" aria-labelledby="legal-title"><h1 id="legal-title">${heading}</h1><p class="updated">Last updated: <time datetime="${SITE.updated}">October 26, 2026</time></p>${body}</article></div>`,
+  body: `<div class="wrap"><article class="prose" aria-labelledby="legal-title"><h1 id="legal-title">${heading}</h1><p class="updated">Last updated: <time datetime="${SITE.updated}">October 29, 2026</time></p>${body}</article></div>`,
 });
 
 const privacy = legal('/privacy/', 'Privacy policy · Tokenmeter & TokenDiet',
@@ -546,8 +568,9 @@ const terms = legal('/terms/', 'Terms of use and refunds · Tokenmeter & TokenDi
 
 <h2>Purchases and refunds</h2>
 <ul>
-  <li>TokenDiet is sold through Agensi, which acts as the seller, processes payment and delivers the download. Its <a href="https://agensi.io/terms">terms</a> apply to your purchase, including refunds.</li>
-  <li>To ask for a refund, follow Agensi's refund process. If you run into a problem with the product itself, <a href="${SITE.issues}">open an issue</a> first; most problems can be fixed quickly.</li>
+  <li>TokenDiet is sold through Agensi, which acts as the seller (merchant of record), processes payment and delivers the download. Its <a href="https://agensi.io/terms">terms</a> apply to your purchase.</li>
+  <li>Every purchase comes with a 30-day money-back guarantee. To ask for a refund, use Agensi's refund process within 30 days of buying. If you run into a problem with the product itself, you're also welcome to <a href="${SITE.issues}">open an issue</a>; most problems can be fixed quickly.</li>
+  <li>Updates are delivered through Agensi: when a new version is released, it replaces the download on your purchase at no extra cost.</li>
   <li>Nothing in these terms limits rights you have under consumer protection law, including Israel's Consumer Protection Law where it applies.</li>
 </ul>
 
@@ -615,12 +638,12 @@ const notFound = {
   <p class="eyebrow">404</p>
   <h1 id="nf-title">This page went on a diet</h1>
   <p class="lead">It doesn't exist anymore, or never did. Here's where you can go instead:</p>
-  <ul class="checklist">
-    <li><a href="/">Home</a></li>
-    <li><a href="/tokendiet/">TokenDiet</a>, the skill that trims your instructions</li>
-    <li><a href="/tokenmeter/">Tokenmeter</a>, the free usage pane and dashboard</li>
-    <li><a href="/tokendiet/thanks/">TokenDiet install guide</a></li>
-    <li><a href="/support/">Support</a></li>
+  <ul class="link-list">
+    <li><a class="arrow-link" href="/">Home</a></li>
+    <li><a class="arrow-link" href="/tokendiet/">TokenDiet</a> <span class="muted">· the skill that trims your instructions</span></li>
+    <li><a class="arrow-link" href="/tokenmeter/">Tokenmeter</a> <span class="muted">· the free usage pane and dashboard</span></li>
+    <li><a class="arrow-link" href="/tokendiet/thanks/">TokenDiet install guide</a></li>
+    <li><a class="arrow-link" href="/support/">Support</a></li>
   </ul>
 </div></section>`,
 };
